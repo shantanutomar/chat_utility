@@ -1,0 +1,2 @@
+export const ADD_MESSAGE_TO_LIST = "ADD_MESSAGE_TO_LIST";
+export const ADD_USER_TO_LIST = "ADD_USER_TO_LIST";
