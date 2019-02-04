@@ -3,7 +3,7 @@ import "./App.css";
 import AddMessage from "./Containers/AddMessage/AddMessage";
 import Users from "./Containers/Users/Users";
 import Messages from "./Containers/Messages/Messages";
-import UserNameInp from "./Containers/UserNameInp/UserNameInp";
+// import UserNameInp from "./Containers/UserNameInp/UserNameInp";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -27,7 +27,7 @@ class App extends Component {
     const { classes } = this.props;
     return (
       <div className="App">
-        <UserNameInp />
+        {/* <UserNameInp /> */}
         <Grid
           container
           className={classes.root}
@@ -35,10 +35,10 @@ class App extends Component {
           justify="center"
           alignItems="stretch"
         >
-          <Grid item xs={3} sm={3} md={3} lg={3} className={classes.usersBox}>
+          <Grid item xs={5} sm={4} md={3} lg={3} className={classes.usersBox}>
             <Users />
           </Grid>
-          <Grid item xs={9} sm={9} md={9} lg={9}>
+          <Grid item xs={7} sm={8} md={9} lg={9}>
             <Grid
               container
               className={classes.root}
@@ -49,7 +49,7 @@ class App extends Component {
             >
               <Grid
                 item
-                xs="auto"
+                xs={5}
                 sm="auto"
                 md="auto"
                 lg="auto"
@@ -59,7 +59,7 @@ class App extends Component {
               </Grid>
               <Grid
                 item
-                xs="auto"
+                xs={2}
                 sm="auto"
                 md="auto"
                 lg="auto"

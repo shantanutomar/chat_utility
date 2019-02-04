@@ -1,13 +1,25 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+// import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
 import * as actions from "../../Store/Actions/actions";
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
+import IconButton from "@material-ui/core/IconButton";
+import ChatIcon from "@material-ui/icons/Chat";
 
 const styles = theme => ({
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit.value
+  root: {
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center"
+  },
+  input: {
+    marginLeft: 8,
+    flex: 1
+  },
+  iconButton: {
+    padding: 10
   }
 });
 
@@ -22,28 +34,30 @@ class AddMessage extends Component {
   };
 
   onEnterKeyPress = event => {
-    if (event.keyCode === 13 && this.state.value) {
-      this.props.addMessageToList(this.state.value);
-      this.setState({
-        value: ""
-      });
-    }
+    this.props.addMessageToList(this.state.value);
+    this.setState({
+      value: ""
+    });
   };
   render() {
     const { classes } = this.props;
     return (
-      <TextField
-        id="standard-multiline-flexible"
-        label="Enter Message"
-        // multiline
-        rowsMax="4"
-        value={this.state.value}
-        onChange={this.handleChange}
-        onKeyDown={this.onEnterKeyPress}
-        className={classes.textField}
-        margin="normal"
-        fullWidth={true}
-      />
+      <Paper className={classes.root} elevation={1}>
+        <InputBase
+          className={classes.input}
+          placeholder="Message"
+          onChange={this.handleChange}
+          value={this.state.value}
+        />
+        <IconButton
+          className={classes.iconButton}
+          aria-label="Enter"
+          onClick={this.onEnterKeyPress}
+          disabled={this.state.value === "" ? true : false}
+        >
+          <ChatIcon />
+        </IconButton>
+      </Paper>
     );
   }
 }

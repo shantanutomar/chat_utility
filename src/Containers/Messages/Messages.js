@@ -8,6 +8,12 @@ import { connect } from "react-redux";
 const styles = {
   card: {
     minHeight: "inherit"
+  },
+  cardContent: {
+    textAlign: "left",
+    display: "flex",
+    flexDirection: "column",
+    overflowWrap: "break-word"
   }
 };
 
@@ -30,7 +36,7 @@ class Messages extends Component {
     const { classes } = this.props;
     return (
       <Card className={classes.card} raised={true}>
-        <CardContent>{messages}</CardContent>
+        <CardContent className={classes.cardContent}>{messages}</CardContent>
       </Card>
     );
   }
