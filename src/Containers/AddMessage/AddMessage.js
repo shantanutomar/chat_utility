@@ -12,7 +12,8 @@ const styles = theme => ({
   root: {
     padding: "2px 4px",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    height: "100%"
   },
   input: {
     marginLeft: 8,
@@ -48,6 +49,7 @@ class AddMessage extends Component {
           placeholder="Message"
           onChange={this.handleChange}
           value={this.state.value}
+          // onKeyPress={this.onEnterKeyPress}
         />
         <IconButton
           className={classes.iconButton}

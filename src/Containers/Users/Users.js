@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 
 const styles = {
   card: {
-    minHeight: "-webkit-fill-available"
+    height: "100%",
+    padding: "10px"
   }
 };
 
@@ -24,6 +25,7 @@ class Users extends Component {
     const { classes } = this.props;
     return (
       <Card className={classes.card} raised={true}>
+        <span>Currently Online</span>
         <CardContent>{users}</CardContent>
       </Card>
     );

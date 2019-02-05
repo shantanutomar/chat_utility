@@ -1,10 +1,12 @@
 import * as actionTypes from "./actionTypes";
+// import socket from "../../socketApi";
 
 export var addMessageToList = messageText => {
   let messageDtls = {};
   messageDtls.messageText = messageText;
   messageDtls.messageAuthor = "You";
   messageDtls.messageID = "You" + messageText;
+  // socket.emit("addmessage", messageDtls);
 
   return {
     type: actionTypes.ADD_MESSAGE_TO_LIST,

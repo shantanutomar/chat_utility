@@ -4,21 +4,24 @@ import AddMessage from "./Containers/AddMessage/AddMessage";
 import Users from "./Containers/Users/Users";
 import Messages from "./Containers/Messages/Messages";
 // import UserNameInp from "./Containers/UserNameInp/UserNameInp";
-import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1
+  usersSection: {
+    width: "30%",
+    margin: "5px",
+    height: "95%"
   },
-  addMessageBox: {
-    padding: 10
+  messagesSection: {
+    width: "70%"
   },
-  messagesBox: {
-    minHeight: 500
+  messagesStyle: {
+    height: "84%",
+    margin: "5px"
   },
-  usersBox: {
-    minHeight: 100
+  addMessageStyle: {
+    height: "9%",
+    margin: "28px 5px"
   }
 });
 
@@ -28,48 +31,17 @@ class App extends Component {
     return (
       <div className="App">
         {/* <UserNameInp /> */}
-        <Grid
-          container
-          className={classes.root}
-          spacing={8}
-          justify="center"
-          alignItems="stretch"
-        >
-          <Grid item xs={5} sm={4} md={3} lg={3} className={classes.usersBox}>
-            <Users />
-          </Grid>
-          <Grid item xs={7} sm={8} md={9} lg={9}>
-            <Grid
-              container
-              className={classes.root}
-              spacing={0}
-              direction="column"
-              justify="center"
-              alignItems="stretch"
-            >
-              <Grid
-                item
-                xs={5}
-                sm="auto"
-                md="auto"
-                lg="auto"
-                className={classes.messagesBox}
-              >
-                <Messages />
-              </Grid>
-              <Grid
-                item
-                xs={2}
-                sm="auto"
-                md="auto"
-                lg="auto"
-                className={classes.addMessageBox}
-              >
-                <AddMessage />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+        <section className={classes.usersSection}>
+          <Users />
+        </section>
+        <section className={classes.messagesSection}>
+          <section className={classes.messagesStyle}>
+            <Messages />
+          </section>
+          <section className={classes.addMessageStyle}>
+            <AddMessage />
+          </section>
+        </section>
       </div>
     );
   }
