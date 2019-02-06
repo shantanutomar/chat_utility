@@ -14,7 +14,6 @@ const styles = {
 
 class Users extends Component {
   render() {
-    console.log(this.props.usersList);
     let users = null;
     users =
       this.props.usersList &&

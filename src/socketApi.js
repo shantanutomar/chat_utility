@@ -1,4 +1,4 @@
-import openSocket from "socket.io-client";
-const socket = openSocket("http://localhost:8000");
+import socketIOClient from "socket.io-client";
+const socket = socketIOClient("http://localhost:4001");
 
 export default socket;

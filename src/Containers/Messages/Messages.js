@@ -4,6 +4,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Message from "../../Components/Message/Message";
 import { connect } from "react-redux";
+// import socket from "../../socketApi";
+import * as actions from "../../Store/Actions/actions";
 
 const styles = {
   card: {
@@ -19,8 +21,13 @@ const styles = {
 };
 
 class Messages extends Component {
+  componentDidMount = () => {
+    // socket.on("messagesadded", message => {
+    //   console.log("Message received on client :" + message.messageText);
+    //   this.props.addMessageToList(message.messageText);
+    // });
+  };
   render() {
-    console.log(this.props.messagesList);
     let messages = null;
     messages =
       this.props.messagesList &&
@@ -50,7 +57,14 @@ var mapStateToProps = state => {
   };
 };
 
+var mapDispatchToProps = dispatch => {
+  return {
+    addMessageToList: messageText =>
+      dispatch(actions.addMessageToList(messageText))
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(withStyles(styles)(Messages));
