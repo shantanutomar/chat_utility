@@ -5,6 +5,11 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import store from "./Store/store";
+import socket from "../src/socketApi";
+
+socket.on("messagesadded", message => {
+  console.log("Message received on client :" + message);
+});
 
 var app = (
   <Provider store={store}>
