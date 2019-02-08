@@ -6,9 +6,13 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import store from "./Store/store";
 import socket from "../src/socketApi";
+import { addMessageToList, addUserToList } from "./Store/Actions/actions";
 
-socket.on("messagesadded", message => {
-  console.log("Message received on client :" + message);
+socket.on("messageAdded", messageDtls => {
+  store.dispatch(addMessageToList(messageDtls));
+});
+socket.on("userAdded", usersList => {
+  store.dispatch(addUserToList(usersList));
 });
 
 var app = (

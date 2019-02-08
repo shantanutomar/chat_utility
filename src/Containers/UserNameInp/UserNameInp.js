@@ -7,22 +7,46 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { connect } from "react-redux";
 import * as actions from "../../Store/Actions/actions";
+import socket from "../../socketApi";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import Tooltip from "@material-ui/core/Tooltip";
 
 class UserNameInp extends React.Component {
   state = {
     open: true,
     userName: "",
-    isButtonDisabled: true
+    isError: false
+  };
+
+  isUserNameValid = () => {
+    if (this.props.usersList.length > 0) {
+      let userNameExists = this.props.usersList.find(ele => {
+        return ele === this.state.userName;
+      });
+      // console.log(userNameExists);
+      if (userNameExists !== undefined) {
+        this.setState({ isError: true });
+      } else {
+        this.handleUserNameSubmit();
+        this.setState({ isError: false });
+      }
+    } else {
+      this.handleUserNameSubmit();
+      this.setState({ isError: false });
+    }
   };
 
   handleUserNameSubmit = () => {
+    socket.emit("addUser", this.state.userName);
     this.props.addUserToList(this.state.userName);
+    this.props.handleCurrentUser(this.state.userName);
     this.setState({ open: false });
   };
+
   handleUserNameChange = event => {
     this.setState({
       userName: event.target.value,
-      isButtonDisabled: false
+      isError: false
     });
   };
 
@@ -35,26 +59,40 @@ class UserNameInp extends React.Component {
           disableBackdropClick={true}
           disableEscapeKeyDown={true}
         >
-          <DialogTitle id="form-dialog-title">Enter chat room!</DialogTitle>
+          <DialogTitle id="form-dialog-title">Let's Chat</DialogTitle>
           <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              placeholder="Your name please!"
-              type="text"
-              fullWidth
-              onChange={this.handleUserNameChange}
-              required={true}
-            />
+            <DialogContentText>
+              Please enter username to enter Chat Room
+            </DialogContentText>
+            <Tooltip
+              onClose={this.handleTooltipClose}
+              open={this.state.isError}
+              // disableFocusListener
+              // disableHoverListener
+              // disableTouchListener
+              title="Username already taken. Please enter other username"
+            >
+              <TextField
+                autoFocus
+                variant="outlined"
+                margin="dense"
+                id="name"
+                placeholder="username"
+                type="text"
+                fullWidth
+                onChange={this.handleUserNameChange}
+                required={true}
+                error={this.state.isError}
+              />
+            </Tooltip>
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={this.handleUserNameSubmit}
+              onClick={this.isUserNameValid}
               color="primary"
-              disabled={this.state.isButtonDisabled}
+              disabled={this.state.userName === ""}
             >
-              Let's Chat!
+              Submit
             </Button>
           </DialogActions>
         </Dialog>
@@ -63,13 +101,20 @@ class UserNameInp extends React.Component {
   }
 }
 
+var mapStateToProps = state => {
+  return {
+    usersList: state.usersList
+  };
+};
 var mapDispatchToProps = dispatch => {
   return {
-    addUserToList: userName => dispatch(actions.addUserToList(userName))
+    addUserToList: userName => dispatch(actions.addUserToList(userName)),
+    handleCurrentUser: currentUser =>
+      dispatch(actions.handleCurrentUser(currentUser))
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(UserNameInp);

@@ -1,13 +1,7 @@
 import * as actionTypes from "./actionTypes";
-import socket from "../../socketApi";
+// import socket from "../../socketApi";
 
-export var addMessageToList = messageText => {
-  let messageDtls = {};
-  messageDtls.messageText = messageText;
-  messageDtls.messageAuthor = "You";
-  messageDtls.messageID = "You" + messageText;
-  socket.emit("addmessage", messageDtls);
-
+export var addMessageToList = messageDtls => {
   return {
     type: actionTypes.ADD_MESSAGE_TO_LIST,
     payLoad: { messageDtls: messageDtls }
@@ -15,12 +9,15 @@ export var addMessageToList = messageText => {
 };
 
 export var addUserToList = userName => {
-  let userDtls = {};
-  userDtls.userID = Math.random();
-  userDtls.userName = userName;
-
   return {
     type: actionTypes.ADD_USER_TO_LIST,
-    payLoad: { userDtls: userDtls }
+    payLoad: { userName: userName }
+  };
+};
+
+export var handleCurrentUser = currentUser => {
+  return {
+    type: actionTypes.ADD_CURR_USER,
+    payLoad: { currentUser: currentUser }
   };
 };

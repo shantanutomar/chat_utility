@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import ChatIcon from "@material-ui/icons/Chat";
+import socket from "../../socketApi";
 
 const styles = theme => ({
   root: {
@@ -34,11 +35,30 @@ class AddMessage extends Component {
     });
   };
 
-  onEnterKeyPress = event => {
-    this.props.addMessageToList(this.state.value);
+  onSubmitClick = event => {
+    let messageDtls = {};
+    messageDtls.messageText = this.state.value;
+    messageDtls.messageAuthor = this.props.currentUser;
+    // messageDtls.messageID = "You" + this.state.value;
+    socket.emit("addMessage", messageDtls);
+    this.props.addMessageToList(messageDtls);
     this.setState({
       value: ""
     });
+  };
+
+  onEnterKeyPress = event => {
+    if (event.keyCode === 13) {
+      let messageDtls = {};
+      messageDtls.messageText = this.state.value;
+      messageDtls.messageAuthor = this.props.currentUser;
+      // messageDtls.messageID = messageDtls.messageAuthor + this.state.value;
+      socket.emit("addMessage", messageDtls);
+      this.props.addMessageToList(messageDtls);
+      this.setState({
+        value: ""
+      });
+    }
   };
   render() {
     const { classes } = this.props;
@@ -49,12 +69,12 @@ class AddMessage extends Component {
           placeholder="Message"
           onChange={this.handleChange}
           value={this.state.value}
-          // onKeyPress={this.onEnterKeyPress}
+          onKeyDown={this.onEnterKeyPress}
         />
         <IconButton
           className={classes.iconButton}
           aria-label="Enter"
-          onClick={this.onEnterKeyPress}
+          onClick={this.onSubmitClick}
           disabled={this.state.value === "" ? true : false}
         >
           <ChatIcon />
@@ -64,14 +84,19 @@ class AddMessage extends Component {
   }
 }
 
+var mapStateToProps = state => {
+  return {
+    currentUser: state.currentUser
+  };
+};
 var mapDispatchToProps = dispatch => {
   return {
-    addMessageToList: messageText =>
-      dispatch(actions.addMessageToList(messageText))
+    addMessageToList: messageDtls =>
+      dispatch(actions.addMessageToList(messageDtls))
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(AddMessage));

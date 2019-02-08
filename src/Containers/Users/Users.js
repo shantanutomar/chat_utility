@@ -18,7 +18,7 @@ class Users extends Component {
     users =
       this.props.usersList &&
       this.props.usersList.map((ele, index) => {
-        return <User key={index} userName={ele.userName} />;
+        return <User key={index} userName={ele} />;
       });
 
     const { classes } = this.props;

@@ -3,7 +3,7 @@ import "./App.css";
 import AddMessage from "./Containers/AddMessage/AddMessage";
 import Users from "./Containers/Users/Users";
 import Messages from "./Containers/Messages/Messages";
-// import UserNameInp from "./Containers/UserNameInp/UserNameInp";
+import UserNameInp from "./Containers/UserNameInp/UserNameInp";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
@@ -30,7 +30,7 @@ class App extends Component {
     const { classes } = this.props;
     return (
       <div className="App">
-        {/* <UserNameInp /> */}
+        <UserNameInp />
         <section className={classes.usersSection}>
           <Users />
         </section>
