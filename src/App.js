@@ -5,6 +5,8 @@ import Users from "./Containers/Users/Users";
 import Messages from "./Containers/Messages/Messages";
 import UserNameInp from "./Containers/UserNameInp/UserNameInp";
 import { withStyles } from "@material-ui/core/styles";
+import socket from "./socketApi";
+import { connect } from "react-redux";
 
 const styles = theme => ({
   usersSection: {
@@ -17,15 +19,32 @@ const styles = theme => ({
   },
   messagesStyle: {
     height: "84%",
-    margin: "5px"
+    margin: "5px",
+    marginLeft: "auto"
   },
   addMessageStyle: {
-    height: "9%",
-    margin: "28px 5px"
+    height: "8%",
+    margin: "38px 5px",
+    marginLeft: "auto"
   }
 });
 
 class App extends Component {
+  removeUserBeforeUnload = () => {
+    socket.emit("removeUser", this.props.currentUser);
+  };
+
+  setupBeforeUnloadListener = () => {
+    window.addEventListener("beforeunload", ev => {
+      ev.preventDefault();
+      return this.removeUserBeforeUnload();
+    });
+  };
+
+  componentDidMount() {
+    this.setupBeforeUnloadListener();
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -46,5 +65,13 @@ class App extends Component {
     );
   }
 }
+var mapStateToProps = state => {
+  return {
+    currentUser: state.currentUser
+  };
+};
 
-export default withStyles(styles)(App);
+export default connect(
+  mapStateToProps,
+  null
+)(withStyles(styles)(App));

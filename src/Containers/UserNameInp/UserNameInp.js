@@ -10,6 +10,22 @@ import * as actions from "../../Store/Actions/actions";
 import socket from "../../socketApi";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Tooltip from "@material-ui/core/Tooltip";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = theme => ({
+  tooltipStyle: {
+    backgroundColor: theme.palette.primary.main
+  },
+  root: {
+    backgroundColor: "#4C7A97"
+  },
+  paper: {
+    backgroundColor: "#C4B9AF"
+  },
+  textStyle: {
+    ...theme.typography
+  }
+});
 
 class UserNameInp extends React.Component {
   state = {
@@ -21,9 +37,8 @@ class UserNameInp extends React.Component {
   isUserNameValid = () => {
     if (this.props.usersList.length > 0) {
       let userNameExists = this.props.usersList.find(ele => {
-        return ele === this.state.userName;
+        return ele.toUpperCase() === this.state.userName.toUpperCase();
       });
-      // console.log(userNameExists);
       if (userNameExists !== undefined) {
         this.setState({ isError: true });
       } else {
@@ -38,7 +53,6 @@ class UserNameInp extends React.Component {
 
   handleUserNameSubmit = () => {
     socket.emit("addUser", this.state.userName);
-    this.props.addUserToList(this.state.userName);
     this.props.handleCurrentUser(this.state.userName);
     this.setState({ open: false });
   };
@@ -51,6 +65,7 @@ class UserNameInp extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
         <Dialog
@@ -58,22 +73,24 @@ class UserNameInp extends React.Component {
           aria-labelledby="form-dialog-title"
           disableBackdropClick={true}
           disableEscapeKeyDown={true}
+          classes={{ root: classes.root, paper: classes.paper }}
         >
-          <DialogTitle id="form-dialog-title">Let's Chat</DialogTitle>
+          <DialogTitle id="form-dialog-title" variant="h6">
+            Let's Chat
+          </DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Please enter username to enter Chat Room
+            <DialogContentText variant="subtitle1">
+              Please enter username to enter chat room
             </DialogContentText>
             <Tooltip
               onClose={this.handleTooltipClose}
               open={this.state.isError}
-              // disableFocusListener
-              // disableHoverListener
-              // disableTouchListener
               title="Username already taken. Please enter other username"
+              classes={{ tooltip: classes.tooltipStyle }}
             >
               <TextField
                 autoFocus
+                autoComplete="off"
                 variant="outlined"
                 margin="dense"
                 id="name"
@@ -91,6 +108,7 @@ class UserNameInp extends React.Component {
               onClick={this.isUserNameValid}
               color="primary"
               disabled={this.state.userName === ""}
+              variant="outlined"
             >
               Submit
             </Button>
@@ -108,7 +126,7 @@ var mapStateToProps = state => {
 };
 var mapDispatchToProps = dispatch => {
   return {
-    addUserToList: userName => dispatch(actions.addUserToList(userName)),
+    // addUserToList: userName => dispatch(actions.addUserToList(userName)),
     handleCurrentUser: currentUser =>
       dispatch(actions.handleCurrentUser(currentUser))
   };
@@ -117,4 +135,4 @@ var mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserNameInp);
+)(withStyles(styles)(UserNameInp));

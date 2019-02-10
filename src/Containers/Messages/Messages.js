@@ -10,7 +10,8 @@ import * as actions from "../../Store/Actions/actions";
 const styles = {
   card: {
     height: "100%",
-    padding: "10px"
+    padding: "16px",
+    backgroundColor: "#C4B9AF"
   },
   cardContent: {
     textAlign: "left",
@@ -21,12 +22,6 @@ const styles = {
 };
 
 class Messages extends Component {
-  componentDidMount = () => {
-    // socket.on("messagesadded", message => {
-    //   console.log("Message received on client :" + message.messageText);
-    //   this.props.addMessageToList(message.messageText);
-    // });
-  };
   render() {
     let messages = null;
     messages =

@@ -13,15 +13,10 @@ var addMessageToList = (state, action) => {
   };
 };
 
-var addUserToList = (state, action) => {
-  console.log("In reducer => " + action.payLoad.userName);
-  let updatedUsersList = [];
-  updatedUsersList = [...state.usersList];
-  console.log(updatedUsersList);
-  updatedUsersList.push(action.payLoad.userName);
+var addUsersToList = (state, action) => {
   return {
     ...state,
-    usersList: updatedUsersList
+    usersList: action.payLoad.usersList
   };
 };
 
@@ -37,7 +32,7 @@ var reducer = (state = initState, action) => {
     case actionTypes.ADD_MESSAGE_TO_LIST:
       return addMessageToList(state, action);
     case actionTypes.ADD_USER_TO_LIST:
-      return addUserToList(state, action);
+      return addUsersToList(state, action);
     case actionTypes.ADD_CURR_USER:
       return handleCurrentUser(state, action);
     default:

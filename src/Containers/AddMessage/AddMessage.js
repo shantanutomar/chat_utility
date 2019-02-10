@@ -14,7 +14,8 @@ const styles = theme => ({
     padding: "2px 4px",
     display: "flex",
     alignItems: "center",
-    height: "100%"
+    height: "100%",
+    backgroundColor: "#C4B9AF"
   },
   input: {
     marginLeft: 8,

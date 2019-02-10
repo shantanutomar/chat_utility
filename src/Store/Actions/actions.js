@@ -1,6 +1,4 @@
 import * as actionTypes from "./actionTypes";
-// import socket from "../../socketApi";
-
 export var addMessageToList = messageDtls => {
   return {
     type: actionTypes.ADD_MESSAGE_TO_LIST,
@@ -8,10 +6,10 @@ export var addMessageToList = messageDtls => {
   };
 };
 
-export var addUserToList = userName => {
+export var addUsersToList = usersList => {
   return {
     type: actionTypes.ADD_USER_TO_LIST,
-    payLoad: { userName: userName }
+    payLoad: { usersList: usersList }
   };
 };
 
